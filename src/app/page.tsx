@@ -1,5 +1,6 @@
 import { db } from "@/db/drizzle";
 import { products } from "@/db/schema";
+import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
 
@@ -7,7 +8,7 @@ export default async function Home() {
   console.log("Home Component Ran");
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-col min-h-screen items-center p-4 bg-zinc-50 font-sans dark:bg-black">
       <h1 className="text-4xl font-bold">Hello</h1>
       <div className="p-2 mt-2 bg-violet-800">
         <Suspense fallback={<div className="text-2xl">Loading...</div>}>
@@ -42,8 +43,10 @@ async function FeaturedProduct() {
   const [product] = await db.select().from(products).limit(1);
   return (
     <div>
-      <h2 className="text-2xl">{product.title}</h2>
-      <p>{product.price}</p>
+      <Link href={`/products/${product.id}`}>
+        <h2 className="text-2xl">{product.title}</h2>
+        <p>{product.price}</p>
+      </Link>
     </div>
   );
 }
