@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 
 export async function getProduct(id: number) {
+  "use cache";
   const product = await db
     .select()
     .from(products)
@@ -13,6 +14,8 @@ export async function getProduct(id: number) {
 }
 
 export async function getProductPrice(id: number) {
+  "use cache: remote";
+  console.log("getProductPrice Ran for id:", id);
   const product = await db
     .select({ price: products.price })
     .from(products)
