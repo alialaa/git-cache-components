@@ -25,6 +25,8 @@ export async function getProductPrice(id: number) {
 }
 
 export async function getRecommendedProducts() {
+  "use cache: private";
+  console.log("getRecommendedProducts Ran");
   const sessionId = (await cookies()).get("token")?.value;
   console.log("Session ID:", sessionId);
   const recommendedProducts = await db.select().from(products).limit(3);
