@@ -55,11 +55,21 @@ async function DynamicWord() {
   ).then((res) => res.json());
   return <div className="text-2xl">Dynamic Random Word: {randomWord}</div>;
 }
-async function StaticWord() {
+
+async function getRandomWord(lang = "en") {
   "use cache";
+  return fetch(`https://random-word-api.herokuapp.com/word?lang=${lang}`).then(
+    (res) => res.json()
+  );
+}
+
+async function StaticWord() {
   console.log("StaticWord Ran");
-  const randomWord = await fetch(
-    `https://random-word-api.herokuapp.com/word`
-  ).then((res) => res.json());
-  return <div className="text-2xl">Static Random Word: {randomWord}</div>;
+  const randomWord = await getRandomWord();
+  const randomWord2 = await getRandomWord("zh");
+  return (
+    <div className="text-2xl">
+      Static Random Word: {randomWord} {randomWord2}
+    </div>
+  );
 }
