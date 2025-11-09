@@ -1,6 +1,6 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function POST() {
-  revalidatePath("/products/[id]", "page");
+  revalidateTag(`product-price-1`, "max");
   return new Response("Invalidation Successful", { status: 200 });
 }
