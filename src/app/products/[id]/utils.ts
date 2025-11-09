@@ -1,6 +1,7 @@
 import { db } from "@/db/drizzle";
 import { products } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { cacheLife } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function getProduct(id: number) {
@@ -15,6 +16,7 @@ export async function getProduct(id: number) {
 
 export async function getProductPrice(id: number) {
   "use cache: remote";
+  cacheLife("minutes");
   console.log("getProductPrice Ran for id:", id);
   const product = await db
     .select({ price: products.price })
